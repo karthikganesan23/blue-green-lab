@@ -1,0 +1,11 @@
+# Ignore Terraform local state and providers
+.terraform/
+*.tfstate
+*.tfstate.*
+
+# Ignore Minikube binary
+k8s/minikube-linux-amd64
+
+# Ignore OS/editor junk
+*.log
+.DS_Store
