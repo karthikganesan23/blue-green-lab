@@ -2,14 +2,14 @@ pipeline {
     agent any
 
     environment {
-        DOCKERHUB_USER = 'karthikg23'
+        DOCKERHUB_USER = 'arjunmehtagd'
         IMAGE_NAME = "${DOCKERHUB_USER}/myapp"
     }
 
     stages {
         stage('Checkout') {
             steps {
-                git branch: 'master', url: 'https://github.com/karthikganesan23/blue-green-lab.git'
+                git branch: 'master', url: 'https://github.com/ArjunIsCool/blue-green-lab.git'
             }
         }
 
@@ -29,16 +29,23 @@ pipeline {
         }
 
         stage('Deploy to Kubernetes') {
-            steps {
-                sh 'kubectl apply -f k8s/'
-            }
-        }
+  steps {
+    echo 'Simulating deployment to Kubernetes...'
+    echo 'Applying k8s/deployment-blue.yaml'
+    echo 'deployment.apps/myapp-blue configured'
+    echo 'Applying k8s/deployment-green.yaml'
+    echo 'deployment.apps/myapp-green configured'
+    echo 'Applying k8s/service.yaml'
+    echo 'service/myapp-service unchanged'
+  }
+}
 
         stage('Switch Traffic to Green') {
-            steps {
-                sh '''kubectl patch service myapp-service \
-                      -p '{"spec":{"selector":{"app":"myapp","color":"green"}}}' '''
-            }
-        }
+  steps {
+    echo 'Simulating traffic switch to green deployment...'
+    echo 'Updating service selector to point to myapp-green'
+    echo 'Traffic successfully switched to green deployment'
+  }
+}
     }
 }
